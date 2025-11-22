@@ -2,27 +2,17 @@
 
 import { Check, Shield, Cpu, Gauge, Headphones, Crown, ArrowRight } from "lucide-react";
 import { useState } from "react";
-import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
 const PricingSection = () => {
   const [isYearly, setIsYearly] = useState(false);
   const [focusedPlan, setFocusedPlan] = useState<string | null>(null);
-  const { isSignedIn, isLoaded } = useUser();
+  const isSignedIn = true; // Auth removed - all users have access
   const router = useRouter();
 
   const handleGetStarted = () => {
-    router.push("/sign-up");
+    router.push("/");
   };
-
-  // Loading state while checking authentication
-  if (!isLoaded) {
-    return (
-      <div className="flex justify-center items-center min-h-[400px]">
-        <div className="w-8 h-8 border-2 border-primary/20 border-t-primary rounded-full animate-spin" />
-      </div>
-    );
-  }
 
   return (
     <div className="flex flex-col max-w-5xl mx-auto w-full px-4">
