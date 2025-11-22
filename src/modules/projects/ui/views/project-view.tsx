@@ -168,7 +168,7 @@ export const ProjectView = ({ projectId }: Props) => {
                                         <Link href="/pricing">
                                             <CrownIcon className="mr-2 h-4 w-4 transition-transform group-hover:rotate-12" />
                                             <span>Upgrade</span>
-                                )}>
+                                        </Link>
                                     </Button>
                                 )}
                             </div>
