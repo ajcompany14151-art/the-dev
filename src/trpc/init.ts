@@ -1,14 +1,13 @@
-import { auth } from '@clerk/nextjs/server';
 import { initTRPC } from '@trpc/server';
 import { cache } from 'react';
 import superjson from 'superjson';
-import { TRPCError } from '@trpc/server';
 
 export const createTRPCContext = cache(async () => {
   /**
    * @see: https://trpc.io/docs/server/context
+   * Authentication removed - all routes are public
    */
-  return { auth: await auth() };
+  return { userId: 'anonymous' };
 });
 
 export type Context = Awaited<ReturnType<typeof createTRPCContext>>;
@@ -21,25 +20,8 @@ const t = initTRPC.context<Context>().create({
   transformer: superjson,
 });
 
-const isAuthed = t.middleware(({ next, ctx }) => {
-  if (!ctx.auth.userId) {
-    throw new TRPCError({ 
-      code: 'UNAUTHORIZED',
-      message: 'Not autheticatd',
-     });
-  }
-
-  return next({
-    ctx: {
-      auth: ctx.auth,
-    }
-  });
-});
-
-// const publicProcedure = t.procedure;
-
 // Base router and procedure helpers
 export const createTRPCRouter = t.router;
 export const createCallerFactory = t.createCallerFactory;
 export const baseProcedure = t.procedure;
-export const protectedProcedure = t.procedure.use(isAuthed);
+export const protectedProcedure = t.procedure;

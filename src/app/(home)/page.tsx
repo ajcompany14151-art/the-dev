@@ -7,22 +7,11 @@ import { ArrowUpRightIcon, ChevronDownIcon } from "lucide-react";
 import BlurText from "@/components/21stdev/blur-text";
 import { HowItWorksSection } from "@/modules/home/ui/components/tagline";
 import ComparisonFeature from "@/modules/home/ui/components/compariosn";
-import { Loader2 } from "lucide-react";
-import { useUser } from "@clerk/nextjs";
 import { ProjectsList } from "@/modules/home/ui/components/projects-list";
 import { Features } from "@/modules/home/ui/components/features-bento";
 
 const Page = () => {
-  const { isSignedIn, isLoaded } = useUser();
-
-  // Show loading state while Clerk is initializing
-  if (!isLoaded) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <Loader2 className="animate-spin" />
-      </div>
-    );
-  }
+  const isSignedIn = true; // Auth removed, always show projects
 
   const scrollToContent = () => {
     window.scrollTo({
@@ -55,18 +44,7 @@ const Page = () => {
           <ProjectForm />
         </div>
 
-        {/* Simple inline scroll indicator - only for non-signed-in users */}
-        {!isSignedIn && (
-          <div className="flex justify-center">
-            <button
-              onClick={scrollToContent}
-              className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors duration-300 group"
-            >
-              <span className="text-sm font-medium ">Scroll down</span>
-              <ChevronDownIcon className="h-5 w-5 animate-bounce group-hover:scale-110 transition-transform" />
-            </button>
-          </div>
-        )}
+
 
         {isSignedIn ? (
           <div className="mt-20">

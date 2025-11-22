@@ -4,7 +4,6 @@ import Link from "next/link";
 import { CrownIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatDuration, intervalToDuration } from "date-fns";
-import { useAuth } from "@clerk/nextjs";
 import { useMemo } from "react";
 import { cn } from "@/lib/utils";
 
@@ -14,8 +13,7 @@ interface Props {
 }
 
 export const Usage = ({ points, msBeforeNext }: Props) => {
-  const { has } = useAuth();
-  const hasProAccess = has?.({ plan: "pro" });
+  const hasProAccess = false; // Auth removed
 
   const resetTime = useMemo(() => {
     try {

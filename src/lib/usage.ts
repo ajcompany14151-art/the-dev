@@ -1,21 +1,16 @@
 import { RateLimiterPrisma } from "rate-limiter-flexible";
 import prisma from "./db";
-import { auth } from "@clerk/nextjs/server";
 
-const FREE_POINTS = 100;
-const PRO_POINTS = 100;
+const FREE_POINTS = 1000; // Increased limit since no auth
 const DURATION = 30 * 24 * 60 *60;  //30 days
 const GENERATION_COST = 1;
+const DEFAULT_USER_ID = "anonymous"; // Default user for no-auth mode
 
 export async function getUsageTracker() {
-
-  const { has } = await auth();
-  const hasPremiumAccess = has({ plan: "pro"})
-
   const usageTracker = new RateLimiterPrisma({
     storeClient: prisma,
     tableName: "Usage",
-    points: hasPremiumAccess ? PRO_POINTS : FREE_POINTS,
+    points: FREE_POINTS,
     duration: DURATION,
   });
 
@@ -23,11 +18,7 @@ export async function getUsageTracker() {
 };
 
 export async function consumeCredits () {
-  const { userId } = await auth()
-
-  if (!userId) {
-    throw new Error("Unauthorized");
-  }
+  const userId = DEFAULT_USER_ID;
 
   const usageTracker = await getUsageTracker();
   const result = await usageTracker.consume(userId, GENERATION_COST);
@@ -35,13 +26,9 @@ export async function consumeCredits () {
 };
 
 export async function getUsageStatus() {
-  const { userId } = await auth()
-
-  if (!userId) {
-    throw new Error("Unauthorized");
-  }
+  const userId = DEFAULT_USER_ID;
 
   const usageTracker = await getUsageTracker();
-  const result = await usageTracker.get(userId);        //getPoints(userId)
+  const result = await usageTracker.get(userId);
   return result;
 }

@@ -1,12 +1,12 @@
 import { z } from "zod";
 import prisma from "@/lib/db";
 import { inngest } from "@/inngest/client";
-import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
+import { createTRPCRouter, baseProcedure } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 import { consumeCredits } from "@/lib/usage";
 
 export const messagesRouter = createTRPCRouter({
-  getMany: protectedProcedure
+  getMany: baseProcedure
     .input(
       z.object({
         projectId: z.string().min(1, { message: "Project ID is required" }),
@@ -17,7 +17,7 @@ export const messagesRouter = createTRPCRouter({
         where: {
           projectId: input.projectId,
           project: {
-            userId: ctx.auth.userId,
+            userId: ctx.userId,
           },
         },
         orderBy: {
@@ -31,7 +31,7 @@ export const messagesRouter = createTRPCRouter({
       return messages;
     }),
 
-  create: protectedProcedure
+  create: baseProcedure
     .input(
       z.object({
         value: z
@@ -46,7 +46,7 @@ export const messagesRouter = createTRPCRouter({
       const exsitingProject = await prisma.project.findUnique({
         where: {
           id: input.projectId,
-          userId: ctx.auth.userId,
+          userId: ctx.userId,
         },
       });
 

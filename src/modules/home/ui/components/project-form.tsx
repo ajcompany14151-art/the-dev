@@ -13,7 +13,6 @@ import { useTRPC } from "@/trpc/client";
 import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
 import { useRouter } from "next/navigation";
-import { useClerk, useAuth } from "@clerk/nextjs";
 import { SiOpenai } from "react-icons/si";
 import { FcGoogle } from "react-icons/fc";
 import { PoweredBy } from "./prompt-su";
@@ -61,10 +60,8 @@ export const ProjectForm = () => {
   const router = useRouter();
   const trpc = useTRPC();
   const queryClient = useQueryClient();
-  const clerk = useClerk();
-  const { has } = useAuth();
 
-  const hasProAccess = has?.({ plan: "pro" }) ?? false;
+  const hasProAccess = false; // Auth removed, no pro access
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -81,8 +78,7 @@ export const ProjectForm = () => {
       },
       onError: (error) => {
         toast.error(error.message);
-        if (error.data?.code === "UNAUTHORIZED") clerk.openSignIn();
-        if (error.data?.code === "TOO_MANY_REQUESTS") router.push("/pricing");
+        if (error.data?.code === "TOO_MANY_REQUESTS") toast.error("Rate limit exceeded. Please try again later.");
       },
     })
   );

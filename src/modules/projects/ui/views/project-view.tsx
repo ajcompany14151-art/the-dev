@@ -11,8 +11,6 @@ import { EyeIcon, CodeIcon, CrownIcon, Loader2, AlertCircle, RocketIcon, Refresh
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { FileExplorer } from "@/components/file-explorer";
-import { UserControl } from "@/components/user-control";
-import { useAuth } from "@clerk/nextjs";
 import { ErrorBoundary } from "react-error-boundary";
 
 const LoadingState = ({ message }: { message: string }) => (
@@ -42,9 +40,8 @@ interface Props {
 }
 
 export const ProjectView = ({ projectId }: Props) => {
-    const { has } = useAuth();
-    const hasProAccess = has?.({ plan: "pro" });
-    const isFreeTier = has?.({ plan: "free_user" });
+    const hasProAccess = false; // Auth removed
+    const isFreeTier = false;
 
     const [activeFragment, setActiveFragment] = useState<Fragment | null>(null);
     const [tabState, setTabState] = useState<"preview" | "code">("preview");
@@ -171,12 +168,9 @@ export const ProjectView = ({ projectId }: Props) => {
                                         <Link href="/pricing">
                                             <CrownIcon className="mr-2 h-4 w-4 transition-transform group-hover:rotate-12" />
                                             <span>Upgrade</span>
-                                        </Link>
+                                )}>
                                     </Button>
                                 )}
-                                <div className="transition-transform hover:scale-105">
-                                    <UserControl />
-                                </div>
                             </div>
                         </div>
 

@@ -3,7 +3,6 @@
 import { formatDistanceToNow } from "date-fns";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
-import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { 
@@ -19,7 +18,6 @@ import {
 export const ProjectsList = () => {
   const trpc = useTRPC();
   const { data: projects } = useQuery(trpc.projects.getMany.queryOptions());
-  const { user } = useUser();
   const router = useRouter();
   const queryClient = useQueryClient();
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -58,7 +56,7 @@ export const ProjectsList = () => {
           </div>
           <div>
             <h2 className="text-xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
-              Vedant's Projects
+              My Projects
             </h2>
             <p className="text-muted-foreground mt-1 text-md">
               {projects?.length || 0} {(projects?.length || 0) === 1 ? 'project' : 'projects'} • <span className="text-primary font-semibold">e2b</span>

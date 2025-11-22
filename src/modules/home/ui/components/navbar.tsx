@@ -3,9 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { SignedIn, SignedOut, SignUpButton } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
-import { UserControl } from "@/components/user-control";
 import { useScroll } from "@/hooks/use-scroll";
 import { LightPullThemeSwitcher } from "@/components/21stdev/light-pull-theme-switcher";
 import { FiGithub } from "react-icons/fi";
@@ -174,14 +172,7 @@ export const Navbar = () => {
 
       {/* Right side */}
       <div className="flex items-center ml-auto gap-2">
-        <SignedOut>
-          <SignUpButton>
-            <InteractiveHoverButton text="Sign Up" />
-          </SignUpButton>
-        </SignedOut>
-        <SignedIn>
-          <UserControl />
-        </SignedIn>
+        {/* Authentication removed */}
       </div>
     </div>
   );
