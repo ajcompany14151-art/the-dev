@@ -3,7 +3,6 @@
 import { formatDistanceToNow } from "date-fns";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
-import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { 
@@ -20,7 +19,6 @@ import {
 export default function ProjectsPage() {
   const trpc = useTRPC();
   const { data: projects } = useQuery(trpc.projects.getMany.queryOptions());
-  const { user } = useUser();
   const router = useRouter();
   const queryClient = useQueryClient();
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
