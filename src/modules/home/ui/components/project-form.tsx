@@ -141,7 +141,7 @@ export const ProjectForm = () => {
                   disabled={isPending}
                   minRows={3}
                   maxRows={12}
-                  placeholder="Ask a question or start a conversation..."
+                  placeholder="Describe what you want to build... (HTML landing page, React dashboard, Vue app, Next.js site, etc.)"
                   className={cn(
                     "w-full resize-none border-none bg-transparent text-foreground placeholder:text-muted-foreground focus:ring-0 outline-none transition-all duration-300",
                     "scrollbar-thin scrollbar-thumb-primary/50 scrollbar-track-transparent hover:scrollbar-thumb-primary/70"

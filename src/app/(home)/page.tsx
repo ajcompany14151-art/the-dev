@@ -34,11 +34,11 @@ const Page = () => {
           </a>
         </div>
         <BlurText 
-          text="Build Next.js Apps at the Speed of Thought"
+          text="Build Web Apps at the Speed of Thought"
           className="font-bold text-4xl md:text-5xl text-center transition-all duration-300 pl-4"
         />  
         <p className="text-lg md:text-xl text-muted-foreground text-center hover:italic">
-          From prompt to production-ready code — powered by <strong className="text-primary italic">AI</strong>
+          HTML, React, Vue, Next.js — anything you need, from prompt to production — powered by <strong className="text-primary italic">AI</strong>
         </p>
         <div className="max-w-3xl mx-auto w-full">
           <ProjectForm />
