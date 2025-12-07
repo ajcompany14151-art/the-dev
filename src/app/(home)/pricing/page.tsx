@@ -190,7 +190,7 @@ const PricingSection = () => {
                   <Cpu className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
                   <div>
                     <div className="text-sm font-medium text-foreground">Advanced AI models</div>
-                    <div className="text-xs text-foreground/60">GPT-5 Codex, Gemini, and premium models</div>
+                    <div className="text-xs text-foreground/60">GPT-5 Codex and other premium models</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">

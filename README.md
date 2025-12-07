@@ -33,7 +33,7 @@
 Transform natural language descriptions into complete Next.js applications with TypeScript and Tailwind CSS. No templates, no restrictions.
 
 **🎯 Unlimited Free AI Generation**  
-Powered by Grok 4 during beta. Generate as many applications as you need without hitting usage limits or paywalls.
+Powered by Google's Gemini 2.5 Flash. Generate as many applications as you need without hitting usage limits or paywalls using your own API key.
 
 **✨ No AI Boilerplate**  
 Clean, idiomatic Next.js code without generic AI patterns. Every generation feels intentional, structured, and ready for real-world projects.

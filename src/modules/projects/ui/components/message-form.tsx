@@ -76,12 +76,12 @@ export const MessageForm = ({ projectId }: Props) => {
 
   // MODEL SELECTOR
   const models = [
-    { name: "codex", label: "GPT-5 (Codex)", icon: <SiOpenai />, isPro: true, description: "Best for deep reasoning" },
-    { name: "gemini", label: "Gemini-2.5 Flash", icon: <SiGoogle />, isPro: true, description: "Google-powered fast model" },
+    { name: "gemini", label: "Gemini-2.0 Flash", icon: <SiGoogle />, isPro: false, description: "Google's latest free model - fast and accurate" },
     { name: "grok", label: "Grok 4 Fast", icon: null, isPro: false, description: "Lightweight and free, suitable for everyone" },
+    { name: "codex", label: "GPT-5 (Codex)", icon: <SiOpenai />, isPro: true, description: "Best for deep reasoning" },
   ];
 
-  const [selectedModel, setSelectedModel] = useState(models[2]);
+  const [selectedModel, setSelectedModel] = useState(models[0]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [dropdownCoords, setDropdownCoords] = useState({ top: 0, left: 0, width: 0 });
@@ -184,9 +184,9 @@ export const MessageForm = ({ projectId }: Props) => {
                               {isBest && <span className="text-yellow-400 text-[10px]">⭐</span>}
                             </div>
                             <span className="text-[8px] text-muted-foreground pl-4 mt-0.5">
-                              {model.name === "codex" && "Best for deep reasoning"}
-                              {model.name === "gemini" && "Google-powered fast model"}
-                              {model.name === "grok" && "Lightweight and free"}
+                            {model.name === "gemini" && "Google's latest free model - fast and accurate"}
+                            {model.name === "grok" && "Lightweight and free"}
+                            {model.name === "codex" && "Best for deep reasoning"}
                             </span>
                           </button>
                         );

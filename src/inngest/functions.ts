@@ -13,6 +13,7 @@ import { FRAGMENT_TITLE_PROMPT, PROMPT, RESPONSE_PROMPT } from "@/prompt";
 import prisma from "@/lib/db";
 import { parseAgentOutput } from "./utils";
 import { SANDBOX_TIMEOUT } from "./types";
+import { generateWithGeminiChat } from "@/lib/gemini";
 
 interface AgentState {
   summary: string;
@@ -29,10 +30,11 @@ export const codeAgentFunction = inngest.createFunction(
     const modelMapping: Record<ModelKey, string | undefined> = {
       "grok": "x-ai/grok-4-fast:free",
       "codex": "openai/gpt-5-codex",
-      "gemini": "google/gemini-2.5-flash",
+      "gemini": "gemini-2.5-flash", // Direct Gemini API
     };
     const selectedModel = (event.data.model as ModelKey); // use model not selectedModel
     const chosenModel = modelMapping[selectedModel];
+    const useDirectGemini = selectedModel === "gemini" && process.env.GEMINI_API_KEY;
 
 
     // DEBUGGING
@@ -82,9 +84,9 @@ export const codeAgentFunction = inngest.createFunction(
       description: "An expert coding angent",
       system: PROMPT,
       model: openai({
-        model: chosenModel ?? "x-ai/grok-4.1-fast:free",
-        apiKey: process.env.OPENAI_API_KEY,
-        baseUrl: process.env.OPENAI_API_BASE,
+        model: chosenModel ?? (useDirectGemini ? "gemini-2.5-flash" : "google/gemini-2.0-flash-exp:free"),
+        apiKey: useDirectGemini ? process.env.GEMINI_API_KEY : process.env.OPENAI_API_KEY,
+        baseUrl: useDirectGemini ? process.env.GEMINI_API_BASE : process.env.OPENAI_API_BASE,
         defaultParameters: { temperature: 0.1 },
       }),
 
@@ -213,7 +215,7 @@ export const codeAgentFunction = inngest.createFunction(
       description: "A fragment title generator",
       system: FRAGMENT_TITLE_PROMPT,
       model: openai({
-        model: process.env.OPENAI_FREE2_MODEL ?? "x-ai/grok-4.1-fast:free",
+        model: process.env.OPENAI_FREE2_MODEL ?? "google/gemini-2.0-flash-exp:free",
         apiKey: process.env.OPENAI_API_KEY,
         baseUrl: process.env.OPENAI_API_BASE,
         defaultParameters: { temperature: 0.1 },
@@ -225,7 +227,7 @@ export const codeAgentFunction = inngest.createFunction(
       description: "A response generator",
       system: RESPONSE_PROMPT,
       model: openai({
-        model: process.env.OPENAI_FREE2_MODEL ?? "x-ai/grok-4.1-fast:free",
+        model: process.env.OPENAI_FREE2_MODEL ?? "google/gemini-2.0-flash-exp:free",
         apiKey: process.env.OPENAI_API_KEY,
         baseUrl: process.env.OPENAI_API_BASE,
         defaultParameters: { temperature: 0.1 },
