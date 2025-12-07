@@ -45,6 +45,53 @@ Every generation deploys automatically through e2b.app. Get a live demo URL inst
 Refine your application through conversational prompts. Add features, adjust layouts, or fix issues without rewriting from scratch.
 
 ---
+
+## Setup and Configuration
+
+### Prerequisites
+
+Before running the application, you need to configure the following:
+
+1. **Database**: PostgreSQL database URL
+   - [Vercel Postgres](https://vercel.com/storage/postgres) (Recommended)
+   - [Supabase](https://supabase.com/)
+   - [PlanetScale](https://planetscale.com/)
+
+2. **AI API Keys**: 
+   - [Google Gemini API Key](https://aistudio.google.com/app/apikey) (Free)
+   - [OpenRouter API Key](https://openrouter.ai/) (Alternative)
+
+3. **Code Execution**:
+   - [E2B API Key](https://e2b.dev/) for sandbox execution
+
+### Environment Setup
+
+1. Copy `.env.local` and update with your actual values:
+```env
+DATABASE_URL="postgresql://username:password@host:5432/database"
+GEMINI_API_KEY="your_actual_gemini_api_key"
+E2B_API_KEY="your_actual_e2b_api_key"
+```
+
+2. Set up your database:
+```bash
+npx prisma db push
+```
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
+### Troubleshooting
+
+**TRPC 500 Errors**: Check [/config](http://localhost:3000/config) page for configuration status.
+
+**Database Connection Issues**: Ensure your `DATABASE_URL` is correct and the database is accessible.
+
+**API Rate Limits**: Use your own Gemini API key for unlimited free usage.
+
+---
 ## Current Limitations
 
 **⏱️ Extended Processing Time**  

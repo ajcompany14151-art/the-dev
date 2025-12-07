@@ -13,20 +13,29 @@ export const messagesRouter = createTRPCRouter({
       }),
     )
     .query(async ({ input, ctx }) => {
-      const messages = await prisma.message.findMany({
-        where: {
-          projectId: input.projectId,
-          project: {
-            userId: ctx.userId,
+      try {
+        const messages = await prisma.message.findMany({
+          where: {
+            projectId: input.projectId,
+            project: {
+              userId: ctx.userId,
+            },
           },
-        },
-        orderBy: {
-          updatedAt: "asc",
-        },
-        include: {
-          fragment: true,
-        },
-      });
+          orderBy: {
+            updatedAt: "asc",
+          },
+          include: {
+            fragment: true,
+          },
+        });
+        return messages;
+      } catch (error) {
+        console.error('Database error in messages.getMany:', error);
+        throw new TRPCError({ 
+          code: "INTERNAL_SERVER_ERROR", 
+          message: "Database connection failed. Please check your configuration." 
+        });
+      }
 
       return messages;
     }),
